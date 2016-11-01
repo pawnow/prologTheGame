@@ -1,5 +1,5 @@
- :- dynamic level/1, hero_position/3, alive/1, position/2, equipment/1, equipmentPosition/3.
-hero_position(meadow,2,2).
+ :- dynamic level/1, hero_position/2, alive/1, position/2, equipment/1, equipmentPosition/3.
+hero_position(2,2).
 location(meadow, 2, 2).
 location(cave, 1, 2).
 location(cave_boss, 0, 2).
@@ -10,23 +10,24 @@ alive(dragon).
 
 north :- go(0, 1).
 south :- go(0, -1).
-east :- go(-1, 0).
-west :- go(1, 0).
+east :- go(1, 0).
+west :- go(-1, 0).
 
 go(XDelta, YDelta) :-
-        hero_position(Place, X, Y),
+        hero_position(X, Y),
 		X1 is X + XDelta,
 		Y1 is Y + YDelta,
-        location(NewPlace, X1, Y1),
-        retract(hero_position(Place, X, Y)),
-        assert(hero_position(NewPlace, X1, Y1)),
+        location(_, X1, Y1),
+        retract(hero_position(X, Y)),
+        assert(hero_position(X1, Y1)),
         show, !.
 
 go(_) :-
         write('That is nothing interesting there, choose other direction').
 
 show :-
-        hero_position(Place, X, Y),
+        hero_position(X, Y),
+		location(Place, X, Y),
         describe(Place),
 		describeActions(Place, X, Y),
         nl.
@@ -35,7 +36,7 @@ start :-
         show.
 		
 take :-
-	hero_position(_,X,Y),
+	hero_position(X,Y),
 	equipmentPosition(Equipment, X, Y),
 	retract(equipmentPosition(Equipment, X, Y)),
     assert(equipment(Equipment)).
@@ -55,8 +56,8 @@ describe(_, _) :-
 	
 describeActions(Place, X, Y) :-
 	nl, write('Possible actions in the current location:'), nl,
-	XWest is X + 1,
-	XEast is X - 1,
+	XWest is X - 1,
+	XEast is X + 1,
 	YNorth is Y + 1,
 	YSouth is Y - 1,
 	describeDirection('You can go West', XWest, Y),

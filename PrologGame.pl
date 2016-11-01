@@ -1,8 +1,9 @@
- :- dynamic level/1, hero_position/3, alive/1, position/2, equipment/1.
+ :- dynamic level/1, hero_position/3, alive/1, position/2, equipment/1, equipmentPosition/3.
 hero_position(meadow,2,2).
 location(meadow, 2, 2).
 location(cave, 1, 2).
 location(cave_boss, 0, 2).
+equipmentPosition(sword, 2, 2).
 
 position(cave_boss, dragon).
 alive(dragon).
@@ -32,6 +33,12 @@ show :-
 
 start :-
         show.
+		
+take :-
+	hero_position(_,X,Y),
+	equipmentPosition(Equipment, X, Y),
+	retract(equipmentPosition(Equipment, X, Y)),
+    assert(equipment(Equipment)).
 
 describe(meadow) :-
         write('You wake up in the middle of the meadow with nothing in hands.'), nl,
@@ -55,7 +62,8 @@ describeActions(Place, X, Y) :-
 	describeDirection('You can go West', XWest, Y),
 	describeDirection('You can go East', XEast, Y),
 	describeDirection('You can go North', X, YNorth),
-	describeDirection('You can go South', X, YSouth).
+	describeDirection('You can go South', X, YSouth),
+	describeTakingEquipment(X, Y).
 
 describeDirection(Direction, X, Y) :-
 	location(Place, X, Y),
@@ -64,4 +72,13 @@ describeDirection(Direction, X, Y) :-
 	write(Place), nl.
 	
 describeDirection(_, _, _) :-
+	write('').
+	
+describeTakingEquipment(X, Y):-
+	equipmentPosition(Equipment, X, Y),
+	write('You can take '),
+	write(Equipment),
+	write(' by writing ''take.'''), nl.
+
+describeTakingEquipment(_, _) :-
 	write('').

@@ -60,7 +60,7 @@ go(XDelta, YDelta) :-
     assert(position(hero, X1, Y1)),
     show, !.
 
-go(_) :-
+go(_, _) :-
     write('That is nothing interesting there, choose other direction').
 
 show :-

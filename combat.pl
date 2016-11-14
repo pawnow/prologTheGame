@@ -1,9 +1,9 @@
-dynamic has/2, helth_points/2.
+dynamic has/2, health_points/2.
 
 :- ['utils', 'items'].
 
 alive(Entity) :-
-	helth_points(Entity, N),
+	health_points(Entity, N),
 	N > 0.
 	
 
@@ -25,8 +25,8 @@ defense(hero, N) :-
 defense(dragon, 5).
 
 defeats(Winner, Loser) :-
-	helth_points(Winner, WinnerHelth),
-	helth_points(Loser, LoserHelth),
+	health_points(Winner, WinnerHelth),
+	health_points(Loser, LoserHelth),
 	defeats(Winner, WinnerHelth, Loser, LoserHelth).
 	
 defeats(_, WinnerHelth, _, LoserHelth) :-

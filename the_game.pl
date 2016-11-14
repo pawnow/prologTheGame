@@ -3,7 +3,7 @@
 reset_game :-
     retractall(game_in_progress),
     retractall(has(_, _)),
-    retractall(helth_points(_, _)),
+    retractall(health_points(_, _)),
     retractall(location(_, _, _)),
     retractall(position(_, _)).
     

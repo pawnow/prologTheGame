@@ -1,4 +1,4 @@
-:- dynamic has/2, helth_points/2, location/3, position/2, event/2.
+:- dynamic has/2, health_points/2, location/3, position/2, event/2.
 
 location(meadow, 2, 2).
 location(cave, 1, 2).
@@ -21,9 +21,9 @@ position(dragon, dragon_cave).
 position(spider, spider_forest).
 position(location_map, hill).
 
-helth_points(hero, 20).
-helth_points(spider, 10).
-helth_points(dragon, 30).
+health_points(hero, 20).
+health_points(spider, 10).
+health_points(dragon, 30).
 
 event(start_game, (
 	write("You wake up in the middle of the meadow with nothing in hands."), nl,

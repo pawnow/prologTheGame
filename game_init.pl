@@ -35,6 +35,7 @@ event(start_game, (
 event(choose_class, (
 	write("Choose your class:"), nl,
 	choose_your_class,
+	levelUp,
 	retractall(event(choose_class, _))
 )).
 

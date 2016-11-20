@@ -5,14 +5,15 @@ hero_class(archer).
 hero_class(knight).
 
 stat(strength).
-stat(defending).
+stat(defence).
 stat(agility).
 
-skills(hero_class(dwarf), strength(10), defending(0), agility(5)).
-skills(hero_class(archer), strength(0), defending(5), agility(10)).
-skills(hero_class(knight), strength(5), defending(10), agility(0)).
+skills(hero_class(dwarf), strength(10), defence(0), agility(5)).
+skills(hero_class(archer), strength(0), defence(5), agility(10)).
+skills(hero_class(knight), strength(5), defence(10), agility(0)).
 	
 choose_your_class :-
+	write("Choose your class:"), nl,
 	findall(Class, hero_class(Class), Classes),
 	maplist(print_class_information, Classes),
 	prompt1("> "),
@@ -27,7 +28,7 @@ try_choose_class(ChosenClass) :-
     assertz(level(1)),
     retractall(stat_bonus(_, _)),
     assertz(stat_bonus(strength, 0)),
-    assertz(stat_bonus(defending, 0)),
+    assertz(stat_bonus(defence, 0)),
     assertz(stat_bonus(agility, 0)),
     write('You have chosen class: '), write(ChosenClass), nl.
     
@@ -74,17 +75,17 @@ try_choose_value_to_go_up(_) :-
 
 printCurrentStats :- 
 	hero(ChosenClass),
-	skills(hero_class(ChosenClass), strength(S), defending(D), agility(A)),
+	skills(hero_class(ChosenClass), strength(S), defence(D), agility(A)),
 	level(Lvl),
 	stat_bonus(strength, StrengthBonus),
-	stat_bonus(defending, DefendingBonus),
+	stat_bonus(defence, DefenceBonus),
 	stat_bonus(agility, AgilityBonus),
 	Strength is S + StrengthBonus,
-	Defending is D + DefendingBonus,
+	Defence is D + DefenceBonus,
 	Agility is A + AgilityBonus,
 	write('Current player stats: '), nl,
 	write('Level: '), write(Lvl), nl,
 	write(strength(Strength)), nl,
-	write(defending(Defending)), nl,
+	write(defence(Defence)), nl,
 	write(agility(Agility)), nl.
 	

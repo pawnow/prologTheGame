@@ -28,15 +28,7 @@ health_points(dragon, 30).
 
 event(start_game, (
 	write("You wake up in the middle of the meadow with nothing in hands."), nl,
-	retractall(event(start_game, _)),
-	assertz(event(choose_class, _))
-)).
-
-event(choose_class, (
-	write("Choose your class:"), nl,
-	choose_your_class,
-	levelUp,
-	retractall(event(choose_class, _))
+	retractall(event(start_game, _))
 )).
 
 event(fight_dragon, (

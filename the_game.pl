@@ -1,4 +1,4 @@
- :- ['utils', 'locations', 'items', 'location_map'].
+ :- ['utils', 'locations', 'items', 'location_map', 'conversation'].
 
 reset_game :-
     retractall(game_in_progress),
@@ -40,7 +40,7 @@ command(south, go_south).
 command(take, take).
 command(items, describe_inventory).
 command(map, show_map).
-    
+command(talk, prompt_conversation).
 perform_command(quit) :-
 	retractall(game_in_progress).
 

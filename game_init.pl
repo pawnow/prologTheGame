@@ -20,6 +20,7 @@ position(knife, meadow).
 position(dragon, dragon_cave).
 position(spider, spider_forest).
 position(location_map, hill).
+npc_position(npc_1, hill).
 
 health_points(hero, 20).
 health_points(spider, 10).

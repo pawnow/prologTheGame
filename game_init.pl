@@ -1,4 +1,5 @@
-:- dynamic has/2, health_points/2, location/3, position/2, event/2.
+ :- ['skills'].
+ :- dynamic has/2, health_points/2, location/3, position/2, event/2.
 
 location(meadow, 2, 2).
 location(cave, 1, 2).
@@ -27,7 +28,14 @@ health_points(dragon, 30).
 
 event(start_game, (
 	write("You wake up in the middle of the meadow with nothing in hands."), nl,
-	retractall(event(start_game, _))
+	retractall(event(start_game, _)),
+	assertz(event(choose_class, _))
+)).
+
+event(choose_class, (
+	write("Choose your class:"), nl,
+	choose_your_class,
+	retractall(event(choose_class, _))
 )).
 
 event(fight_dragon, (

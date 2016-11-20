@@ -1,5 +1,4 @@
- :- ['skills'].
- :- dynamic has/2, health_points/2, location/3, position/2, event/2.
+:- dynamic has/2, health_points/2, location/3, position/2, event/2.
 
 location(meadow, 2, 2).
 location(cave, 1, 2).

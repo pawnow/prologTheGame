@@ -1,5 +1,7 @@
 :- dynamic has/2, health_points/2, location/3, position/2, event/2.
 
+:- ['quests'].
+
 location(meadow, 2, 2).
 location(cave, 1, 2).
 location(dragon_cave, 0, 2).
@@ -34,6 +36,7 @@ health_points(dragon, 30).
 
 event(start_game, (
 	write("You wake up in the middle of the meadow with nothing in hands."), nl,
+	startQuest(killing_monsters),
 	retractall(event(start_game, _))
 )).
 

@@ -1,4 +1,4 @@
- :- ['utils', 'locations', 'items', 'location_map', 'skills', 'characteristics'].
+ :- ['utils', 'locations', 'items', 'location_map', 'skills', 'characteristics', 'game_init', 'quests'].
 
 reset_game :-
     retractall(game_in_progress),
@@ -6,6 +6,8 @@ reset_game :-
     retractall(health_points(_, _)),
     retractall(location(_, _, _)),
     retractall(achivement(_)),
+    retractall(current_quest(_)),
+    retractall(finished_quest(_)),
     retractall(position(_, _)).
     
 restart :-
@@ -47,6 +49,7 @@ command(stats, printCurrentStats).
 command(char, getCharacteristics).
 command(achiev, getCollectedAchievements).
 command(open_chest, open_chest).
+command(quests, questLog).
     
 perform_command(quit) :-
 	retractall(game_in_progress).
@@ -89,6 +92,7 @@ display_help :-
 	write("stats - to show character statistics"), nl,
 	write("char - to show hero characteristics"), nl,
 	write("achiev - to show list of collected achivements"), nl,
+	write("quests - shows the list of quests"), nl,
 	try((
 		has(hero, location_map),
 		write("map - show the map of the area"), nl

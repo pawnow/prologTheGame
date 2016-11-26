@@ -21,7 +21,3 @@ getCollectedAchievements :-
 	write('Collected achivements: '), nl,
 	maplist(display_list_element, Achievements).
 	
-display_list_element(Element) :-
-	write(Element), nl.
-	
-	

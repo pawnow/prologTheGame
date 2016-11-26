@@ -14,8 +14,7 @@ skills(hero_class(knight), strength(5), defence(10), agility(0)).
 	
 choose_your_class :-
 	println("Choose your class:"),
-	findall(Class, hero_class(Class), Classes),
-	maplist(print_class_information, Classes),
+	foreach(hero_class(Class), print_class_information(Class)),
 	prompt1("> "),
     read(ChosenClass), nl,
     try_choose_class(ChosenClass).
@@ -47,8 +46,7 @@ print_class_information(N) :-
 level_up :- 
 	println('You have increased your level.'),
 	print_current_stats,
-	findall(Stat, stat_bonus(Stat, _), Stats),
-	maplist(print_possible_stats_to_grow, Stats),
+	foreach(stat_bonus(Stat, _), print_possible_stats_to_grow(Stat)),
 	prompt1("> "),
     read(ChosenStat), nl,
     try_choose_value_to_go_up(ChosenStat).
@@ -84,7 +82,7 @@ print_current_stats :-
 	Defence is D + DefenceBonus,
 	Agility is A + AgilityBonus,
 	println('Current player stats: '),
-	println('Level: '), write(Lvl),
+	write('Level: '), println(Lvl),
 	println(strength(Strength)),
 	println(defence(Defence)),
 	println(agility(Agility)).

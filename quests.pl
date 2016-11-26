@@ -20,14 +20,12 @@ quest_log :-
 	print_finished_quests.
 
 print_active_quests :-
-	findall(Q, active_quest(Q), Quests),
 	write('Current quests: '), nl,
-	maplist(print_quest, Quests).
+	foreach(active_quest(Q), print_quest(Q)).
 	
 print_finished_quests :-
-	findall(Q, finished_quest(Q), Quests),
 	write('Finished quests: '), nl,
-	maplist(print_quest, Quests).
+	foreach(finished_quest(Q), print_quest(Q)).
 	
 print_quest(Quest) :-
 	quest(Quest),

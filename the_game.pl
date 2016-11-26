@@ -89,11 +89,11 @@ display_help :-
 	println("west - go west"),
 	println("take - take an item in the current location"),
 	println("talk - talk to a person in the current location"),
-	println("stats - to show character statistics"),
-	println("char - to show hero characteristics"),
-	println("achiev - to show list of collected achivements"),
-	println("quests - shows the list of quests"),
-	println("look - to check where we can move"),
+	println("stats - show character statistics"),
+	println("char - show hero characteristics"),
+	println("achiev - show list of collected achivements"),
+	println("quests - show the list of quests"),
+	println("look - check where hero can move"),
 	try((
 		has(hero, location_map),
 		println("map - show the map of the area")

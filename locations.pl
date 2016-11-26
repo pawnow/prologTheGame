@@ -68,15 +68,15 @@ describe_directions :-
     XEast is X + 1,
     YNorth is Y + 1,
     YSouth is Y - 1,
-    describe_direction('You can go West', XWest, Y),
-    describe_direction('You can go East', XEast, Y),
-    describe_direction('You can go North', X, YNorth),
-    describe_direction('You can go South', X, YSouth).
+    describe_direction('West', XWest, Y),
+    describe_direction('East', XEast, Y),
+    describe_direction('North', X, YNorth),
+    describe_direction('South', X, YSouth).
 
 describe_direction(Direction, X, Y) :-
     location(Place, X, Y),
     location_name(Place, PlaceName),
-    write(Direction),
+    write('You can go '), write(Direction),
     write(' to find '),
     println(PlaceName).
     

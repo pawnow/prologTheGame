@@ -1,4 +1,4 @@
- :- ['utils', 'locations', 'items', 'location_map', 'conversation'].
+ :- ['utils', 'locations', 'items', 'location_map', 'skills', 'conversation'].
 
 reset_game :-
     retractall(game_in_progress),
@@ -10,7 +10,9 @@ reset_game :-
 restart :-
     reset_game,
     consult_local('game_init.pl'),
+    choose_your_class,
     assertz(game_in_progress),
+    levelUp,
     display_help,
     handle_events,
     continue.
@@ -40,6 +42,8 @@ command(south, go_south).
 command(take, take).
 command(items, describe_inventory).
 command(map, show_map).
+command(stats, printCurrentStats).
+    
 command(talk, prompt_conversation).
 perform_command(quit) :-
 	retractall(game_in_progress).
@@ -79,6 +83,7 @@ display_help :-
 	write("west - go west"), nl,
 	write("take - take an item in the current location"), nl,
 	write("talk - talk to a person in the current location"), nl,
+	write("stats - to show character statistics"), nl,
 	try((
 		has(hero, location_map),
 		write("map - show the map of the area"), nl

@@ -13,7 +13,7 @@ go(XDelta, YDelta) :-
     describe_location, !.
 
 go(_, _) :-
-    write('That is nothing interesting there, choose other direction.'), nl.
+    println('That is nothing interesting there, choose other direction.').
 
 go_north :- go(0, 1).
 go_south :- go(0, -1).
@@ -23,42 +23,41 @@ go_west :- go(-1, 0).
 describe_location :-
 	position(hero, Location),
 	describe_location(Location),
-	describe_directions,
 	describe_items(Location).
 
 describe_location(meadow) :-
-	write("You see a cave in the west and a hill in the north."), nl.
+	println("You see a cave in the west and a hill in the north.").
         
 describe_location(cave) :-
-	write("You enter the cave, there is dark inside."), nl,
+	println("You enter the cave, there is dark inside."),
 	try((
-		chest_is_visible(cave),
-		write("You use your torchlight and see chest on the ground, write 'open_chest.' to try opening it."), nl
+		is_visible(chest, cave),
+		println("You use your torchlight and see chest on the ground, write 'open_chest.' to try opening it.")
 	)).
         
 describe_location(dragon_cave) :-
-    write("You see a dragon inside the cave."), nl.
+    println("You see a dragon inside the cave.").
     
 describe_location(hill) :-
-    write("You climb up a hill and look around."), nl.
+    println("You climb up a hill and look around.").
     
 describe_location(forest_entry) :-
-    write("You're on the edge of an old forest."), nl.
+    println("You're on the edge of an old forest.").
     
 describe_location(forest(_, _)) :-
-    write("You're inside an old forest."), nl.
+    println("You're inside an old forest.").
     
 describe_location(spider_forest) :-
     describe_location(forest(_, _)).
     
 describe_location(forest_hut) :-
-	write("You're standing in front of a small forest hut but the door is locked."), nl.
+	println("You're standing in front of a small forest hut but the door is locked.").
 	
 describe_items(Location) :-
 	position(Item, Location),
 	is_item(Item),
 	write("There is "), describe_item(Item),
-	write("Write 'take.' to take this item."), nl.
+	println("Write 'take.' to take this item.").
 
 describe_items(_).
 
@@ -78,7 +77,7 @@ describe_direction(Direction, X, Y) :-
     location(Place, X, Y),
     write(Direction),
     write(' to find '),
-    write(Place), nl.
+    println(Place).
     
 describe_direction(_, _, _) :-
     write('').

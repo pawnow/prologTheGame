@@ -26,8 +26,8 @@ list_max(Min, [H | T], Max) :-
 print_repeated(Str, Count) :-
 	foreach(between(1, Count, _), write(Str)).
 	
-display_list_element(Element) :-
-	write(Element), nl.
+println(ItemToPrint) :-
+	write(ItemToPrint), nl.
 
 %Files	 
 		 

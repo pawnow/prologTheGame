@@ -13,7 +13,7 @@ skills(hero_class(archer), strength(0), defence(5), agility(10)).
 skills(hero_class(knight), strength(5), defence(10), agility(0)).
 	
 choose_your_class :-
-	write("Choose your class:"), nl,
+	println("Choose your class:"),
 	findall(Class, hero_class(Class), Classes),
 	maplist(print_class_information, Classes),
 	prompt1("> "),
@@ -33,20 +33,20 @@ try_choose_class(ChosenClass) :-
     write('You have chosen class: '), write(ChosenClass), nl.
     
 try_choose_class(_) :-
-	write('Incorrect choice, try other option'), nl,
+	println('Incorrect choice, try other option'),
 	choose_your_class.
     
 print_class_information(N) :-
 	write('Class: '), write(N), nl,
 	skills(hero_class(N), S, D, A),
-	write(S), nl,
-	write(D), nl,
-	write(A), nl,
+	println(S),
+	println(D),
+	println(A),
 	write('Type: "'), write(N), write('." to choose this class'), nl.
 	
-levelUp :- 
-	write('You have increased your level.'), nl,
-	printCurrentStats,
+level_up :- 
+	println('You have increased your level.'),
+	print_current_stats,
 	findall(Stat, stat_bonus(Stat, _), Stats),
 	maplist(print_possible_stats_to_grow, Stats),
 	prompt1("> "),
@@ -66,14 +66,14 @@ try_choose_value_to_go_up(Stat) :-
 	assertz(stat_bonus(Stat, NumUp)),
 	retractall(level(_)),
 	assertz(level(LvlUp)),
-	write('Stats after leveling up: '), nl,
-	printCurrentStats.
+	println('Stats after leveling up: '),
+	print_current_stats.
 	
 try_choose_value_to_go_up(_) :-
-	write('Incorrect choice, try other option'), nl,
-	levelUp.
+	println('Incorrect choice, try other option'),
+	level_up.
 
-printCurrentStats :- 
+print_current_stats :- 
 	hero(ChosenClass),
 	skills(hero_class(ChosenClass), strength(S), defence(D), agility(A)),
 	level(Lvl),
@@ -83,9 +83,9 @@ printCurrentStats :-
 	Strength is S + StrengthBonus,
 	Defence is D + DefenceBonus,
 	Agility is A + AgilityBonus,
-	write('Current player stats: '), nl,
-	write('Level: '), write(Lvl), nl,
-	write(strength(Strength)), nl,
-	write(defence(Defence)), nl,
-	write(agility(Agility)), nl.
+	println('Current player stats: '),
+	println('Level: '), write(Lvl),
+	println(strength(Strength)),
+	println(defence(Defence)),
+	println(agility(Agility)).
 	

@@ -13,29 +13,14 @@ is_weapon(sword, 4).
 
 is_armor(chain_armor, 5).
 
-describe_item(location_map) :-
-	write('a map of the surrounding area.'), nl.
-
-describe_item(knife) :-
-	write('a short sharp knife.'), nl.
-
-describe_item(sword) :-
-	write('a short one-handed sword.'), nl.
-
-describe_item(chain_armor) :-
-	write('a light chain armor.'), nl.
-	
-describe_item(torchlight) :-
-	write('a torchlight giving lots of light.'), nl.
-	
-describe_item(dragonroots) :-
-	write('dragonroots - rare plant.'), nl.
-	
-describe_item(bloodmoss) :-
-	write('bloodmoss - common herb.'), nl.
-	
-describe_item(key) :-
-	write('a key to the chest.'), nl.
+item_description(location_map, 'a map of the surrounding area.').
+item_description(knife, 'a short sharp knife.').
+item_description(sword, 'a short one-handed sword.').
+item_description(chain_armor, 'a light chain armor.').
+item_description(torchlight, 'a torchlight giving lots of light.').
+item_description(dragonroots, 'dragonroots - rare plant.').
+item_description(bloodmoss, 'bloodmoss - common herb.').
+item_description(key, 'a key to the chest.').
 
 take :-
     position(hero, Location),
@@ -44,27 +29,33 @@ take :-
     retractall(position(Item, Location)),
     assertz(has(hero, Item)).
     
-chest_is_visible(Location) :- 
-	position(chest, Location),
+is_visible(Object, Location) :- 
+	position(hero, Location),
+	position(Object, Location),
 	not(darkness_location(Location)).
 	
-chest_is_visible(Location) :- 
-	position(chest, Location),
+is_visible(Object, Location) :- 
+	position(hero, Location),
+	position(Object, Location),
 	darkness_location(Location),
 	has(hero, torchlight).
 
 open_chest :-
 	position(hero, Location),
-	chest_is_visible(Location),
+	is_visible(chest, Location),
 	has(hero, key),
 	assertz(has(hero, sword)),
-	write("You opened the chest and found new sword."), nl.
+	println("You opened the chest and found new sword.").
 	
 open_chest :-
-	write("You need to find a chest and have key to open it."), nl.
+	println("You need to find a chest and have key to open it.").
     
+describe_item(Item) :-
+	item_description(Item, Description),
+	println(Description).
+
 describe_inventory :-
-	write("You have:"), nl,
+	println("You have:"),
 	foreach(has(hero, Item), describe_item(Item)),
 	nl.
 	

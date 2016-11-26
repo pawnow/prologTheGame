@@ -1,23 +1,23 @@
 :- ['utils'].
 :- dynamic achivement/1, visited/1.
 
-characteristic(explorer) :-
+characteristics(explorer) :-
 	characteristic(curious),
 	characteristic(strong).
 
-characteristic(curious) :-
+characteristics(curious) :-
 	has(hero, location_map).
 	
-characteristic(strong) :-
+characteristics(strong) :-
 	has(hero, sword).
 	
-getCharacteristics :-
-	findall(C, characteristic(C), Characteristics),
-	write('Hero characteristics: '), nl,
+print_characteristics :-
+	findall(C, characteristics(C), Characteristics),
+	println('Hero characteristics: '),
 	maplist(display_list_element, Characteristics).
 	
-getCollectedAchievements :-
+print_collected_achievements :-
 	findall(A, achivement(A), Achievements),
-	write('Collected achivements: '), nl,
+	println('Collected achivements: '),
 	maplist(display_list_element, Achievements).
 	

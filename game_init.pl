@@ -35,20 +35,20 @@ health_points(spider, 10).
 health_points(dragon, 30).
 
 event(start_game, (
-	write("You wake up in the middle of the meadow with nothing in hands."), nl,
-	startQuest(killing_monsters),
+	println("You wake up in the middle of the meadow with nothing in hands."),
+	start_quest(killing_monsters),
 	retractall(event(start_game, _))
 )).
 
 event(fight_dragon, (
 	position(hero, dragon_cave),
-	write("The dragon kills you. Sad but"), nl,
+	println("The dragon kills you. Sad but"),
 	retractall(event(fight_dragon, _)),
 	retractall(game_in_progress)
 )).
 
 event(collect_map, (
 	has(hero, location_map),
-	write("You've found a map. Type 'map.' to have a closer look."), nl,
+	println("You've found a map. Type 'map.' to have a closer look."),
 	retractall(event(collect_map, _))
 )).

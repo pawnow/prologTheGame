@@ -16,7 +16,7 @@ restart :-
     choose_your_class,
     assertz(game_in_progress),
     assertz(achivement(start_game)),
-    levelUp,
+    level_up,
     display_help,
     handle_events,
     continue.
@@ -35,7 +35,6 @@ prompt_command :-
     
 prompt_command.
 
-
 command(help, display_help).  
 command(show, describe_location).
 command(east, go_east).
@@ -45,11 +44,12 @@ command(south, go_south).
 command(take, take).
 command(items, describe_inventory).
 command(map, show_map).
-command(stats, printCurrentStats).
-command(char, getCharacteristics).
-command(achiev, getCollectedAchievements).
+command(stats, print_current_stats).
+command(char, print_characteristics).
+command(achiev, print_collected_achievements).
 command(open_chest, open_chest).
-command(quests, questLog).
+command(quests, quest_log).
+command(look_around, describe_directions).
     
 perform_command(quit) :-
 	retractall(game_in_progress).
@@ -79,28 +79,28 @@ handle_events(Events) :-
 	).
     
 display_help :-
-	write("Type a command followed by a period to perform an action."), nl,
-	write("help - show this instruction"), nl,
-	write("quit - quit the game"), nl,
-	write("show - describe the current location"), nl,
-	write("north - go north"), nl,
-	write("east - go east"), nl,
-	write("south - go south"), nl,
-	write("west - go west"), nl,
-	write("take - take an item in the current location"), nl,
-	write("talk - talk to a person in the current location"), nl,
-	write("stats - to show character statistics"), nl,
-	write("char - to show hero characteristics"), nl,
-	write("achiev - to show list of collected achivements"), nl,
-	write("quests - shows the list of quests"), nl,
+	println("Type a command followed by a period to perform an action."),
+	println("help - show this instruction"),
+	println("quit - quit the game"),
+	println("show - describe the current location"),
+	println("north - go north"),
+	println("east - go east"),
+	println("south - go south"),
+	println("west - go west"),
+	println("take - take an item in the current location"),
+	println("talk - talk to a person in the current location"),
+	println("stats - to show character statistics"),
+	println("char - to show hero characteristics"),
+	println("achiev - to show list of collected achivements"),
+	println("quests - shows the list of quests"),
 	try((
 		has(hero, location_map),
-		write("map - show the map of the area"), nl
+		println("map - show the map of the area")
 	)),
 	try((
 		position(hero, Location),
-		chest_is_visible(Location),
-		write("open_chest - open chest if you have proper key"), nl
+		is_visible(chest, Location),
+		println("open_chest - open chest if you have proper key")
 	)),
 	nl.
 	

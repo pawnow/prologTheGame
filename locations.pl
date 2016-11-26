@@ -32,7 +32,7 @@ describe_location(cave) :-
 	println("You enter the cave, there is dark inside."),
 	try((
 		is_visible(chest, cave),
-		println("You use your torchlight and see chest on the ground, write 'open_chest.' to try opening it.")
+		println("You use your torchlight and see chest on the ground, write 'open.' to try opening it.")
 	)).
         
 describe_location(dragon_cave) :-
@@ -75,9 +75,10 @@ describe_directions :-
 
 describe_direction(Direction, X, Y) :-
     location(Place, X, Y),
+    location_name(Place, PlaceName),
     write(Direction),
     write(' to find '),
-    println(Place).
+    println(PlaceName).
     
 describe_direction(_, _, _) :-
     write('').

@@ -47,9 +47,9 @@ command(map, show_map).
 command(stats, print_current_stats).
 command(char, print_characteristics).
 command(achiev, print_collected_achievements).
-command(open_chest, open_chest).
+command(open, open_chest).
 command(quests, quest_log).
-command(look_around, describe_directions).
+command(look, describe_directions).
     
 perform_command(quit) :-
 	retractall(game_in_progress).
@@ -93,6 +93,7 @@ display_help :-
 	println("char - to show hero characteristics"),
 	println("achiev - to show list of collected achivements"),
 	println("quests - shows the list of quests"),
+	println("look - to check where we can move"),
 	try((
 		has(hero, location_map),
 		println("map - show the map of the area")
@@ -100,7 +101,7 @@ display_help :-
 	try((
 		position(hero, Location),
 		is_visible(chest, Location),
-		println("open_chest - open chest if you have proper key")
+		println("open - open chest if you have proper key")
 	)),
 	nl.
 	

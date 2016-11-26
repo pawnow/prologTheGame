@@ -22,14 +22,14 @@ quest_log :-
 print_active_quests :-
 	findall(Q, active_quest(Q), Quests),
 	write('Current quests: '), nl,
-	maplist(print_quests_list, Quests).
+	maplist(print_quest, Quests).
 	
 print_finished_quests :-
 	findall(Q, finished_quest(Q), Quests),
 	write('Finished quests: '), nl,
-	maplist(print_quests_list, Quests).
+	maplist(print_quest, Quests).
 	
-print_quests_list(Quest) :-
+print_quest(Quest) :-
 	quest(Quest),
 	quest_description(Quest, Description),
 	write(Quest), write(": "), write(Description), nl.

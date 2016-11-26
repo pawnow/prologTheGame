@@ -51,7 +51,7 @@ state(grandma, 1, 1) :-
 state(grandma, 1, 1) :-
 	println("Well, that's too bad. Be gone then. I will remain here, if you happen to reconsider"),
 	state(grandma, 0, 1).
-	
+
 		
 state(grandma, 2, 2) :-
 	start_quest(spiderman),
@@ -61,5 +61,57 @@ state(grandma, 2, 2) :-
 state(grandma, 0, _) :-
 	println("Bye.").
 	
+
+
+
+state(drake, 1, 0) :-
+	\+ active_quest(saving_dragon),
+	println("Hold on! We don't need to fight!"),
+	println("0. Silence! I shall end you!"),
+	println("1. What do you mean?"),
+	read(Response),
+	state(drake, Response, 1).
+
+state(drake, 1, 0) :-
+	active_quest(saving_dragon),
+	\+ has(hero, dragonroots),
+	\+ has(hero, bloodmoss),
+	println("Retrieve the herbs!"),
+	state(drake, 0, 0).
+
+state(drake, 1, 0) :-
+	active_quest(saving_dragon),
+	has(hero, dragonroots),
+	has(hero, bloodmoss),
+	retract(has(hero, dragonroots)),
+	retract(has(hero, bloodmoss)),
+	println("The herbs! Now I can become human again!"),
+	finish_quest(saving_dragon),
+	println("You saved the dragon, and - by extension - the world. All is good now."),
+	retractall(event(fight_dragon, _)),
+	retractall(game_in_progress).
+
+state(drake, 1, 1) :-
+	println("I haven't always been a dragon... I was a knight untill an evil curse turned me into a beast"),
+	println("I can sense that you are a kind person... would you help me return to my true form?"),
+	println("0. I don't believe any of your lies. Now prepare yourself, beast!"),
+	println("1. What do I need to do to help you?"),
+	read(Response),
+	state(drake, Response, 2).	
+
+state(drake, 1, 2) :-
+	println("I need bloodmoss and dragonroots to perform the reversal ritual. They can be found in the forest, however I cannot obtain them myself."),
+	println("Return to me when you will acquire both!"),
+	start_quest(saving_dragon),
+	state(drake, 0, 0).
 	
+state(drake, 0, 0) :-
+	println("bye").
+
+state(drake, 0, _) :-
+	println("Time to fight the dragon!"),
+	assertz(dragon_quest_rejected),
+	println("The dragon kills you. Sad but"),
+	retractall(event(fight_dragon, _)),
+	retractall(game_in_progress).
 	

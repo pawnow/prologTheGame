@@ -26,7 +26,7 @@ position(dragon, dragon_cave).
 position(spider, spider_forest).
 position(location_map, hill).
 npc_position(grandma, forest_hut).
-
+npc_position(drake, dragon_cave).
 darkness_location(cave).
 darkness_location(dragon_cave).
 
@@ -41,6 +41,7 @@ event(start_game, (
 )).
 
 event(fight_dragon, (
+	dragon_quest_rejected,
 	position(hero, dragon_cave),
 	println("The dragon kills you. Sad but"),
 	retractall(event(fight_dragon, _)),

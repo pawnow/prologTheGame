@@ -1,4 +1,4 @@
-:- dynamic active_quest/1, finished_quest/1.
+:- dynamic active_quest/1, finished_quest/1, spider_killed, spider_escaped.
 
 quest(killing_monsters).
 quest(spiderman).
@@ -31,3 +31,9 @@ print_quest(Quest) :-
 	quest(Quest),
 	quest_description(Quest, Description),
 	write(Quest), write(": "), write(Description), nl.
+	
+spider_gone:-
+	spider_killed.
+	
+spider_gone:-
+	spider_escaped.

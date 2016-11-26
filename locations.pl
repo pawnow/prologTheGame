@@ -51,7 +51,7 @@ describe_location(spider_forest) :-
     describe_location(forest(_, _)).
     
 describe_location(forest_hut) :-
-	println("You're standing in front of a small forest hut but the door is locked.").
+	println("You're standing in front of a small forest hut. There is an old lady inside.").
 	
 describe_items(Location) :-
 	position(Item, Location),

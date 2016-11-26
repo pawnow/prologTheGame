@@ -19,14 +19,13 @@ location(hill, 2, 3).
 position(hero, meadow).
 position(knife, meadow).
 position(chest, cave).
-position(key, forest_hut).
 position(dragonroots, forest(4, 0)).
 position(bloodmoss, forest(5, 1)).
 position(torchlight, forest(5, 3)).
 position(dragon, dragon_cave).
 position(spider, spider_forest).
 position(location_map, hill).
-npc_position(npc_1, hill).
+npc_position(grandma, forest_hut).
 
 darkness_location(cave).
 darkness_location(dragon_cave).

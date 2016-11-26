@@ -26,6 +26,8 @@ list_max(Min, [H | T], Max) :-
 print_repeated(Str, Count) :-
 	foreach(between(1, Count, _), write(Str)).
 	
+println(Text) :-
+	write(Text), nl.
 
 %Files	 
 		 

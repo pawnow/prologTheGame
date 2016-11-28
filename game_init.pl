@@ -25,6 +25,7 @@ position(torchlight, forest(5, 3)).
 position(dragon, dragon_cave).
 position(spider, spider_forest).
 position(location_map, hill).
+
 npc_position(grandma, forest_hut).
 npc_position(drake, dragon_cave).
 darkness_location(cave).

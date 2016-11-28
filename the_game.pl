@@ -6,7 +6,7 @@ reset_game :-
     retractall(health_points(_, _)),
     retractall(location(_, _, _)),
     retractall(achivement(_)),
-    retractall(current_quest(_)),
+    retractall(active_quest(_)),
     retractall(finished_quest(_)),
     retractall(position(_, _)).
     

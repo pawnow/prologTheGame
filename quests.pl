@@ -1,11 +1,13 @@
-:- dynamic active_quest/1, finished_quest/1.
+:- dynamic active_quest/1, finished_quest/1, spider_killed, spider_escaped, dragon_quest_rejected.
 
 quest(killing_monsters).
 quest(spiderman).
 quest(bounty_hunter).
+quest(saving_dragon).
 quest_description(killing_monsters, "There is a mighty dragon in the west, kill him.").
 quest_description(spiderman, "Old grandma is scared of the spider - get rid of it.").
 quest_description(bounty_hunter, "Grandma gave you a key to treasure, find it and get your reward.").
+quest_description(saving_dragon, "Dragon asked me to bring him bloodmoss and dragonroots to undo his curse.").
 
 start_quest(QuestName) :-
 	assertz(active_quest(QuestName)).
@@ -31,3 +33,9 @@ print_quest(Quest) :-
 	quest(Quest),
 	quest_description(Quest, Description),
 	write(Quest), write(": "), write(Description), nl.
+	
+spider_gone:-
+	spider_killed.
+	
+spider_gone:-
+	spider_escaped.

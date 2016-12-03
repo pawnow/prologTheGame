@@ -32,7 +32,7 @@ defeats(Winner, Loser) :-
 defeats(_, WinnerHelth, _, LoserHelth) :-
 	WinnerHelth > 0,
 	LoserHelth =< 0.
-	
+
 defeats(Winner, WinnerHelth, Loser, LoserHelth) :-
 	strength(Winner, WinnerStrength),
 	strength(Loser, LoserStrength),

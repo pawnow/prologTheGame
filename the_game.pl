@@ -1,4 +1,4 @@
- :- ['utils', 'locations', 'items', 'location_map', 'skills', 'characteristics', 'game_init', 'quests'].
+ :- ['utils', 'locations', 'items', 'location_map', 'skills', 'characteristics', 'game_init', 'quests', 'conversation'].
 
 reset_game :-
     retractall(game_in_progress),
@@ -6,7 +6,7 @@ reset_game :-
     retractall(health_points(_, _)),
     retractall(location(_, _, _)),
     retractall(achivement(_)),
-    retractall(current_quest(_)),
+    retractall(active_quest(_)),
     retractall(finished_quest(_)),
     retractall(position(_, _)).
     
@@ -51,6 +51,7 @@ command(open, open_chest).
 command(quests, quest_log).
 command(look, describe_directions).
     
+command(talk, prompt_conversation).
 perform_command(quit) :-
 	retractall(game_in_progress).
 

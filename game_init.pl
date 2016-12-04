@@ -84,7 +84,10 @@ event(dragon_dead, (
     not(is_alive(dragon)),
     finish_quest(killing_monsters),
     add_achievement("Kill the dragon."),
-    retractall(event(dragon_dead, _))
+    retractall(event(dragon_dead, _)),
+    println("You've killed the dragon. You're a real hero!"),
+    retractall(event(fight_dragon, _)),
+	retractall(game_in_progress)
 )).
 
 event(help_grandma, (

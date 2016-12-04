@@ -10,10 +10,12 @@ quest_description(bounty_hunter, "Grandma gave you the key to a treasure, find i
 quest_description(saving_dragon, "Dragon asked me to bring him bloodmoss and dragonroots to undo his curse.").
 
 start_quest(QuestName) :-
+	retractall(active_quest(QuestName)),
 	assertz(active_quest(QuestName)).
 	
 finish_quest(QuestName) :-
 	retractall(active_quest(QuestName)),
+	retractall(finished_quest(QuestName)),
 	assertz(finished_quest(QuestName)).
 
 quest_log :-

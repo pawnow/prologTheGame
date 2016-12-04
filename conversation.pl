@@ -20,6 +20,7 @@ prompt_conversation :-
 dialog_state(grandma, 1, 0) :-
 	\+ active_quest(spiderman),
 	\+ spider_gone,
+	add_achievement("Talk with grandma"),
 	println("What do you want to know?"),
 	println("0 - Just passing by."),
 	println("1 - You look troubled. Is something wrong?"),
@@ -64,6 +65,7 @@ dialog_state(grandma, 1, 0) :-
 	assertz(has(hero, key)),
 	finish_quest(spiderman),
 	start_quest(bounty_hunter),
+	level_up,
 	dialog_state(grandma, 0, 1).	
 	
 dialog_state(grandma, 1, 1) :-
@@ -115,6 +117,7 @@ dialog_state(dragon, 1, 0) :-
 	println("The herbs! Now I can become human again!"),
 	finish_quest(saving_dragon),
 	println("You saved the dragon, and - by extension - the world. All is good now."),
+	add_achievement("Finish the game by removing the curse"),
 	retractall(event(fight_dragon, _)),
 	retractall(game_in_progress).
 

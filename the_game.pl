@@ -1,4 +1,4 @@
-:- ['utils', 'locations', 'items', 'location_map', 'skills', 'characteristics', 'quests', 'conversation', 'combat', 'tests'].
+:- ['utils', 'locations', 'items', 'location_map', 'skills', 'characteristics', 'quests', 'conversation', 'combat'].
 
 reset_world :-
     retractall(has(_, _)),

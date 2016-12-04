@@ -36,22 +36,42 @@ describe_location(cave) :-
 	)).
         
 describe_location(dragon_cave) :-
-    println("You see a dragon inside the cave.").
+    println("You see a dragon inside lying in the cave."),
+    try((
+        is_alive(dragon),
+        not(is_enemy(dragon)),
+        println("Speak to it to wake it up.")
+    )).
     
 describe_location(hill) :-
-    println("You climb up a hill and look around.").
+    println("You climb up a hill and look around."),
+    println("You can see a lake and a boat wreck in the far north.").
     
 describe_location(forest_entry) :-
     println("You're on the edge of an old forest.").
     
-describe_location(forest(_, _)) :-
+describe_location(forest(_)) :-
     println("You're inside an old forest.").
-    
-describe_location(spider_forest) :-
-    describe_location(forest(_, _)).
     
 describe_location(forest_hut) :-
 	println("You're standing in front of a small forest hut. There is an old lady inside.").
+	
+describe_location(canyon(_)) :-
+    println("You're at the bottom of a deep canyon.").
+    
+describe_location(lake) :-
+	println("There's water all around").
+	
+describe_location(beach) :-
+	println("You're on a beach. Some remnants of an old boat are standing out of the water.").
+	
+describe_location(desert(D)) :-
+	println("Sand under your feet, sand in your eyes, sand all around"),
+	try((
+	   position(snake(S), desert(D)),
+	   is_alive(snake(S)),
+	   println("There's a wild snake. It seems aggressive.")
+	)).
 	
 describe_items(Location) :-
 	position(Item, Location),
@@ -68,26 +88,31 @@ describe_directions :-
     XEast is X + 1,
     YNorth is Y + 1,
     YSouth is Y - 1,
-    describe_direction('West', XWest, Y),
-    describe_direction('East', XEast, Y),
-    describe_direction('North', X, YNorth),
-    describe_direction('South', X, YSouth).
+    describe_direction('west', XWest, Y),
+    describe_direction('east', XEast, Y),
+    describe_direction('north', X, YNorth),
+    describe_direction('south', X, YSouth).
 
 describe_direction(Direction, X, Y) :-
     location(Place, X, Y),
     location_name(Place, PlaceName),
     write('You can go '), write(Direction),
     write(' to find '),
-    println(PlaceName).
+    write(PlaceName),
+    write('.'), nl.
     
 describe_direction(_, _, _) :-
     write('').
 	
-location_name(meadow, "Meadow").
-location_name(cave, "Cave").
-location_name(dragon_cave, "Mountain").
-location_name(hill, "Hill").
-location_name(forest_entry, "Forest").
-location_name(forest(_, _), "Forest").
-location_name(spider_forest, "Forest").
-location_name(forest_hut, "Forest hut").
+location_name(meadow, "meadow").
+location_name(cave, "cave").
+location_name(dragon_cave, "mountain").
+location_name(hill, "hill").
+location_name(forest_entry, "forest").
+location_name(forest(_), "forest").
+location_name(forest_hut, "forest hut").
+location_name(canyon(_), "canyon").
+location_name(beach, "beach").
+location_name(lake, "lake").
+location_name(desert(_), "desert").
+

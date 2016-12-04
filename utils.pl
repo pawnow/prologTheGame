@@ -21,13 +21,18 @@ list_max(Min, [H | T], Max) :-
 	list_max(Min1, T, Max).
 	
 
-%Printing
+%Text
 
 print_repeated(Str, Count) :-
 	foreach(between(1, Count, _), write(Str)).
 	
 println(Text) :-
 	write(Text), nl.
+	
+capitalize(Text, CapitalizedText) :-
+	string_chars(Text, [FirstChar | Chars]),
+	upcase_atom(FirstChar, FirstCapital),
+	string_chars(CapitalizedText, [FirstCapital | Chars]).
 
 %Files	 
 		 

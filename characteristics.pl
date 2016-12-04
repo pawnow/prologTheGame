@@ -13,9 +13,15 @@ characteristics(strong) :-
 	
 print_characteristics :-
 	println('Hero characteristics: '),
-	foreach(characteristics(C), println(C)).
+	forall(characteristics(C), println(C)),
+	nl.
 	
 print_collected_achievements :-
 	println('Collected achivements: '),
-	foreach(achivement(A), println(A)).
+	forall(achievement(A), println(A)),
+	nl.
+	
+add_achievement(A) :-
+	retractall(achievement(A)),
+	assertz(achievement(A)).
 	

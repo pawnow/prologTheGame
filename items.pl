@@ -1,17 +1,22 @@
-
 is_item(location_map).
 is_item(torchlight).
 is_item(dragonroots).
 is_item(bloodmoss).
 is_item(key).
+is_item(clover).
 
-is_item(Item) :- is_weapon(Item, _).
-is_item(Item) :- is_armor(Item, _).
+is_item(Item) :- is_weapon(Item).
+is_item(Item) :- is_armor(Item).
 
-is_weapon(knife, 2).
-is_weapon(sword, 4).
+is_weapon(knife).
+is_weapon(sword).
 
-is_armor(chain_armor, 5).
+is_armor(chain_armor).
+
+item_bonus(knife, strength, 2).
+item_bonus(sword, strength, 4).
+item_bonus(chain_armor, defence, 5).
+item_bonus(clover, luck, 10).
 
 item_description(location_map, 'a map of the surrounding area.').
 item_description(knife, 'a short sharp knife.').
@@ -21,6 +26,7 @@ item_description(torchlight, 'a torchlight giving lots of light.').
 item_description(dragonroots, 'dragonroots - rare plant.').
 item_description(bloodmoss, 'bloodmoss - common herb.').
 item_description(key, 'a key to the chest.').
+item_description(clover, 'a four-leaf clover - people say it brings luck.').
 
 take :-
     position(hero, Location),

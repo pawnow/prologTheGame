@@ -1,89 +1,120 @@
-:- dynamic hero/1, lvl_bonus/4, stat_bonus/2, level/1.
+:- dynamic chosen_hero_class/1, lvl_bonus/4, trained_stat/2, level/1.
 
 hero_class(dwarf).
-hero_class(archer).
+hero_class(scout).
 hero_class(knight).
 
-stat(strength).
-stat(defence).
-stat(agility).
+stat_type(strength).
+stat_type(defence).
+stat_type(agility).
+stat_type(luck).
 
-skills(hero_class(dwarf), strength(10), defence(0), agility(5)).
-skills(hero_class(archer), strength(0), defence(5), agility(10)).
-skills(hero_class(knight), strength(5), defence(10), agility(0)).
-	
+class_bonus(dwarf, strength, 20).
+class_bonus(dwarf, defence, 5).
+class_bonus(dwarf, agility, 5).
+class_bonus(dwarf, luck, 25).
+class_bonus(scout, strength, 10).
+class_bonus(scout, defence, 5).
+class_bonus(scout, agility, 10).
+class_bonus(scout, luck, 40).
+class_bonus(knight, strength, 15).
+class_bonus(knight, defence, 10).
+class_bonus(knight, agility, 5).
+class_bonus(knight, luck, 25).
+
+stat(hero, Stat, Value) :-
+	trained_stat(Stat, TrainedStat),
+	chosen_hero_class(Class),
+    class_bonus(Class, Stat, ClassBonus),
+    findall(ItemBonus,
+        (has(hero, Item), item_bonus(Item, Stat, ItemBonus)),
+        ItemsBonuses),
+    list_max(0, ItemsBonuses, ItemsBonus),
+    Value is TrainedStat + ClassBonus + ItemsBonus.
+    
+stat(dragon, strength, 25).
+stat(dragon, defence, 8).
+stat(dragon, agility, 4).
+stat(dragon, luck, 20).
+
+stat(spider, strength, 12).
+stat(spider, defence, 5).
+stat(spider, agility, 8).
+stat(spider, luck, 25).
+
+stat(snake(_), strength, 8).
+stat(snake(_), defence, 8).
+stat(snake(_), agility, 10).
+stat(snake(_), luck, 35).
+    
+    
+    
 choose_your_class :-
-	println("Choose your class:"),
-	foreach(hero_class(Class), print_class_information(Class)),
-	prompt1("> "),
+    println("Choose your class:"),
+    foreach(hero_class(Class), print_class_information(Class)),
+    prompt1("> "),
     read(ChosenClass), nl,
     try_choose_class(ChosenClass).
     
 try_choose_class(ChosenClass) :-
-	hero_class(ChosenClass),
-	retractall(hero(_)),
-    assertz(hero(ChosenClass)),
+    hero_class(ChosenClass),
+    retractall(chosen_hero_class(_)),
+    assertz(chosen_hero_class(ChosenClass)),
     retractall(level(_)),
     assertz(level(1)),
-    retractall(stat_bonus(_, _)),
-    assertz(stat_bonus(strength, 0)),
-    assertz(stat_bonus(defence, 0)),
-    assertz(stat_bonus(agility, 0)),
-    write('You have chosen class: '), write(ChosenClass), nl.
+    retractall(trained_stat(_, _)),
+    assertz(trained_stat(strength, 0)),
+    assertz(trained_stat(defence, 0)),
+    assertz(trained_stat(agility, 0)),
+    assertz(trained_stat(luck, 0)),
+    write('You have chosen class: '), write(ChosenClass), nl, !.
     
 try_choose_class(_) :-
-	println('Incorrect choice, try other option'),
-	choose_your_class.
+    println('Incorrect choice, try other option'),
+    choose_your_class.
     
-print_class_information(N) :-
-	write('Class: '), write(N), nl,
-	skills(hero_class(N), S, D, A),
-	println(S),
-	println(D),
-	println(A),
-	write('Type: "'), write(N), write('." to choose this class'), nl.
-	
+print_class_information(Class) :-
+    write('Class: '), write(Class), nl,
+    forall(stat_type(Stat), (
+        class_bonus(Class, Stat, Value),
+        write(Stat), write(": "), write(Value), nl
+    )),
+    write('Type: "'), write(Class), write('." to choose this class.'), nl, nl.
+    
+    
 level_up :- 
-	println('You have increased your level.'),
-	print_current_stats,
-	foreach(stat_bonus(Stat, _), print_possible_stats_to_grow(Stat)),
-	prompt1("> "),
+    println('You have increased your level.'),
+    print_current_stats,
+    forall(stat_type(Stat), (
+        write('Write "'), write(Stat), write('." to increase this stat by one.'), nl
+    )),
+    prompt1("> "),
     read(ChosenStat), nl,
     try_choose_value_to_go_up(ChosenStat).
-	
-print_possible_stats_to_grow(Stat) :-
-	stat_bonus(Stat, _),
-	write('Write "'), write(Stat), write('." to increase this stat by one.'), nl.
-	
+    
 try_choose_value_to_go_up(Stat) :-
-	stat_bonus(Stat, Num),
-	level(Lvl),
-	NumUp is Num + 1,
-	LvlUp is Lvl + 1,
-	retractall(stat_bonus(Stat, _)),
-	assertz(stat_bonus(Stat, NumUp)),
-	retractall(level(_)),
-	assertz(level(LvlUp)),
-	println('Stats after leveling up: '),
-	print_current_stats.
-	
+    trained_stat(Stat, Num),
+    level(Lvl),
+    NumUp is Num + 1,
+    LvlUp is Lvl + 1,
+    retractall(trained_stat(Stat, _)),
+    assertz(trained_stat(Stat, NumUp)),
+    retractall(level(_)),
+    assertz(level(LvlUp)),
+    println('Stats after leveling up: '),
+    print_current_stats.
+    
 try_choose_value_to_go_up(_) :-
-	println('Incorrect choice, try other option'),
-	level_up.
+    println('Incorrect choice, try other option'),
+    level_up.
 
 print_current_stats :- 
-	hero(ChosenClass),
-	skills(hero_class(ChosenClass), strength(S), defence(D), agility(A)),
-	level(Lvl),
-	stat_bonus(strength, StrengthBonus),
-	stat_bonus(defence, DefenceBonus),
-	stat_bonus(agility, AgilityBonus),
-	Strength is S + StrengthBonus,
-	Defence is D + DefenceBonus,
-	Agility is A + AgilityBonus,
-	println('Current player stats: '),
-	write('Level: '), println(Lvl),
-	println(strength(Strength)),
-	println(defence(Defence)),
-	println(agility(Agility)).
-	
+    level(Lvl),
+    println('Current player stats: '),
+    write('Level: '), println(Lvl),
+    forall(stat_type(Stat), (
+        stat(hero, Stat, Value),
+        write(Stat), write(": "), write(Value), nl
+    )),
+    nl.
+    

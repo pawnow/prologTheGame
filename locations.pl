@@ -50,8 +50,13 @@ describe_location(hill) :-
 describe_location(forest_entry) :-
     println("You're on the edge of an old forest.").
     
-describe_location(forest(_)) :-
-    println("You're inside an old forest.").
+describe_location(forest(F)) :-
+    println("You're inside an old forest."),
+    try((
+	   position(spider, forest(F)),
+	   \+ spider_gone,
+	   println("You can see a somewhat big spider in the glade. It did not notice you yet.")
+	)).
     
 describe_location(forest_hut) :-
 	println("You're standing in front of a small forest hut. There is an old lady inside.").

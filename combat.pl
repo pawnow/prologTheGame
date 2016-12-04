@@ -73,15 +73,18 @@ describe_combat(combat_finished(Opponent1, Opponent2)) :-
     capitalize(Subject1, CapitalizedSubject1),
     full_subject(Opponent2, Subject2),
     format("~w killed ~w.~n", [CapitalizedSubject1, Subject2]),
-    level_up(Opponent1), !.
+    level_up(Opponent1, Opponent2), !.
 
 describe_combat(combat_finished(Opponent1, Opponent2)) :-
 	describe_combat(combat_finished(Opponent2, Opponent1)).
 	
-level_up(hero) :-
+level_up(_, dragon) :-
+	!.
+
+level_up(hero, _) :-
 	level_up.
 	
-level_up(_) :-
+level_up(_, _) :-
 	!.
 
 full_subject(hero, "you").

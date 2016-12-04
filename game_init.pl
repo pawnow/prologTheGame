@@ -1,4 +1,4 @@
-:- dynamic has/2, health_points/2, location/3, position/2, event/2, is_enemy/1, spider_gone.
+:- dynamic has/2, health_points/2, location/3, position/2, event/2, is_enemy/1.
 
 :- ['quests'].
 
@@ -114,10 +114,10 @@ add_killing_achiev :-
 	add_achievement("You have defeated every enemy that stood in your path. You truly are an ultimate slayer.").
 	
 add_killing_achiev :-
-	spider_gone,
 	is_alive(spider),
 	is_alive(dragon),
 	is_alive(snake(west)),
 	is_alive(snake(south)),
 	add_achievement("Having completed the game without claiming a single life, you have proven to be a true saint pacifist.").
 	
+add_killing_achiev :- !.

@@ -27,7 +27,7 @@ dialog_state(grandma, 1, 0) :-
 dialog_state(grandma, 1, 0) :-
 	\+ active_quest(spiderman),
 	\+ finished_quest(spiderman),
-	add_achievement("Talk with grandma"),
+	add_achievement("Talk with grandma."),
 	println("What do you want to know?"),
 	println("0 - Just passing by."),
 	println("1 - You look troubled. Is something wrong?"),
@@ -133,7 +133,7 @@ dialog_state(spider, 2, 1) :-
 dialog_state(spider, 3, 1) :-
 	println("You sneak on a spider slowly. You manage to get close, breathe in, and then suddenly jump and scream as loud as you can."),
 	println("The spider freaks out and escapes."),
-	assertz(spider_gone),
+	retractall(position(spider,_)),
 	println("There is no one around anymore.").
 	
 		
@@ -167,7 +167,7 @@ dialog_state(dragon, 1, 0) :-
 	finish_quest(saving_dragon),
 	println("You saved the dragon, and - by extension - the world. All is good now."),
 	add_killing_achiev,
-	add_achievement("Finish the game by removing the curse"),
+	add_achievement("Finish the game by removing the curse."),
 	retractall(event(fight_dragon, _)),
 	retractall(game_in_progress).
 

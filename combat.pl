@@ -13,7 +13,9 @@ fight(Opponent1, _, _, _) :-
     not(is_alive(Opponent1)), !.
     
 fight(_, _, Opponent2, _) :-
-    not(is_alive(Opponent2)), !.
+    not(is_alive(Opponent2)),
+    add_achievement("Defeat opponent in fight"),
+    level_up, !.
 	
 fight(Opponent1, Stamina1, Opponent2, Stamina2) :-
 	Stamina1 >= 100,

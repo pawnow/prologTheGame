@@ -51,7 +51,9 @@ open_chest :-
 	is_visible(chest, Location),
 	has(hero, key),
 	assertz(has(hero, sword)),
-	println("You opened the chest and found new sword.").
+	println("You opened the chest and found new sword."),
+	add_achievement("Get reward from the chest."),
+	level_up.
 	
 open_chest :-
 	println("You need to find a chest and have key to open it.").

@@ -13,9 +13,7 @@ fight(Opponent1, _, _, _) :-
     not(is_alive(Opponent1)), !.
     
 fight(_, _, Opponent2, _) :-
-    not(is_alive(Opponent2)),
-    add_achievement("Defeat opponent in fight"),
-    level_up, !.
+    not(is_alive(Opponent2)), !.
 	
 fight(Opponent1, Stamina1, Opponent2, Stamina2) :-
 	Stamina1 >= 100,
@@ -74,7 +72,9 @@ describe_combat(combat_finished(Opponent1, Opponent2)) :-
 	full_subject(Opponent1, Subject1),
     capitalize(Subject1, CapitalizedSubject1),
     full_subject(Opponent2, Subject2),
-    format("~w killed ~w.~n", [CapitalizedSubject1, Subject2]), !.
+    format("~w killed ~w.~n", [CapitalizedSubject1, Subject2]),
+    add_achievement("Defeat opponent in fight"),
+    level_up, !.
 
 describe_combat(combat_finished(Opponent1, Opponent2)) :-
 	describe_combat(combat_finished(Opponent2, Opponent1)).

@@ -92,7 +92,6 @@ event(dragon_dead, (
 
 event(help_grandma, (
     spider_gone,
-    finish_quest(spiderman),
     add_achievement("Help the grandma."),
     retractall(event(help_grandma, _))
 )).

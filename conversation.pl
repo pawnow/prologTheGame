@@ -18,8 +18,15 @@ prompt_conversation :-
 	println("There is no one around...").
 	
 dialog_state(grandma, 1, 0) :-
+	finished_quest(spiderman),
+	println("You enter the hut and notice that the grandma is sleeping. Now that the spider is gone, she has nothing to worry about"),
+	println("0 - Walk away."),
+	read(Response),
+	dialog_state(grandma, Response, 0).	
+	
+dialog_state(grandma, 1, 0) :-
 	\+ active_quest(spiderman),
-	\+ spider_gone,
+	\+ finished_quest(spiderman),
 	add_achievement("Talk with grandma"),
 	println("What do you want to know?"),
 	println("0 - Just passing by."),
@@ -49,12 +56,6 @@ dialog_state(grandma, 3, 1) :-
 dialog_state(grandma, 1, 0) :-
 	active_quest(spiderman),
 	\+ spider_gone,
-	println("Is spider gone yet? Return when your quest is done!"), 
-	dialog_state(grandma, 0, 1).
-	
-dialog_state(grandma, 1, 0) :-
-	active_quest(spiderman),
-	\+ spider_gone,
 	println("Come back when the spider is no more!"),
 	dialog_state(grandma, 0, 1).
 
@@ -69,6 +70,7 @@ dialog_state(grandma, 1, 0) :-
 	dialog_state(grandma, 0, 1).	
 	
 dialog_state(grandma, 1, 1) :-
+	\+ spider_gone,
 	println("Yes, actually. There is a giant spider living in a forest nearby. It seems to be extremely dangerous."),
 	println("I'm unable to sleep well knowing that it's lurking somewhere in the darkness. Could you do something about it?"),
 	println("0 - I can't. You see, I'm in a great hurry. I'm actually leaving right now. Bye."),
@@ -76,7 +78,21 @@ dialog_state(grandma, 1, 1) :-
 	println("2 - Sure, I'll help you."),
 	read(Response),
 	dialog_state(grandma, Response, 2).
+
 	
+dialog_state(grandma, 1, 1) :-
+	spider_gone,
+	println("Yes, actually. There is a giant spider living in a forest nearby. It seems to be extremely dangerous."),
+	println("I'm unable to sleep well knowing that it's lurking somewhere in the darkness. Could you do something about it?"),
+	println("0 - Whatever. Bye."),
+	println("1 - The spider from the woods? I have already got rid of it."),
+	read(Response),
+	dialog_state(grandma, Response, 3).
+	
+dialog_state(grandma, 1, 3) :-
+	start_quest(spiderman),
+	dialog_state(grandma, 1, 0).
+
 dialog_state(grandma, 1, 2) :-
 	println("Please help me. You are the only one who can."),
 	dialog_state(grandma, 1, 0).

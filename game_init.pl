@@ -49,7 +49,6 @@ position(knife, canyon(south_west)).
 position(grandma, forest_hut).
 
 is_enemy(snake(_)).
-is_enemy(spider).
 
 darkness_location(cave).
 darkness_location(dragon_cave).
@@ -86,13 +85,13 @@ event(dragon_dead, (
     add_achievement("Kill the dragon."),
     retractall(event(dragon_dead, _)),
     println("You've killed the dragon. You're a real hero!"),
+    add_killing_achiev,
     retractall(event(fight_dragon, _)),
 	retractall(game_in_progress)
 )).
 
 event(help_grandma, (
     spider_gone,
-    finish_quest(spiderman),
     add_achievement("Help the grandma."),
     retractall(event(help_grandma, _))
 )).
@@ -105,3 +104,20 @@ event(retry, (
     nl,
     replay
 )).
+
+
+add_killing_achiev :-
+	not(is_alive(spider)),
+	not(is_alive(dragon)),
+	not(is_alive(snake(west))),
+	not(is_alive(snake(south))),
+	add_achievement("You have defeated every enemy that stood in your path. You truly are an ultimate slayer.").
+	
+add_killing_achiev :-
+	is_alive(spider),
+	is_alive(dragon),
+	is_alive(snake(west)),
+	is_alive(snake(south)),
+	add_achievement("Having completed the game without claiming a single life, you have proven to be a true saint pacifist.").
+	
+add_killing_achiev :- !.

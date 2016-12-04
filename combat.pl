@@ -73,7 +73,6 @@ describe_combat(combat_finished(Opponent1, Opponent2)) :-
     capitalize(Subject1, CapitalizedSubject1),
     full_subject(Opponent2, Subject2),
     format("~w killed ~w.~n", [CapitalizedSubject1, Subject2]),
-    add_achievement("Defeat opponent in fight"),
     level_up(Opponent1, Opponent2), !.
 
 describe_combat(combat_finished(Opponent1, Opponent2)) :-

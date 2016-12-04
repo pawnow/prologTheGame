@@ -18,9 +18,16 @@ prompt_conversation :-
 	println("There is no one around...").
 	
 dialog_state(grandma, 1, 0) :-
+	finished_quest(spiderman),
+	println("You enter the hut and notice that the grandma is sleeping. Now that the spider is gone, she has nothing to worry about."),
+	println("0 - Walk away."),
+	read(Response),
+	dialog_state(grandma, Response, 0).	
+	
+dialog_state(grandma, 1, 0) :-
 	\+ active_quest(spiderman),
-	\+ spider_gone,
-	add_achievement("Talk with grandma"),
+	\+ finished_quest(spiderman),
+	add_achievement("Talk with grandma."),
 	println("What do you want to know?"),
 	println("0 - Just passing by."),
 	println("1 - You look troubled. Is something wrong?"),
@@ -49,12 +56,6 @@ dialog_state(grandma, 3, 1) :-
 dialog_state(grandma, 1, 0) :-
 	active_quest(spiderman),
 	\+ spider_gone,
-	println("Is spider gone yet? Return when your quest is done!"), 
-	dialog_state(grandma, 0, 1).
-	
-dialog_state(grandma, 1, 0) :-
-	active_quest(spiderman),
-	\+ spider_gone,
 	println("Come back when the spider is no more!"),
 	dialog_state(grandma, 0, 1).
 
@@ -69,6 +70,7 @@ dialog_state(grandma, 1, 0) :-
 	dialog_state(grandma, 0, 1).	
 	
 dialog_state(grandma, 1, 1) :-
+	\+ spider_gone,
 	println("Yes, actually. There is a giant spider living in a forest nearby. It seems to be extremely dangerous."),
 	println("I'm unable to sleep well knowing that it's lurking somewhere in the darkness. Could you do something about it?"),
 	println("0 - I can't. You see, I'm in a great hurry. I'm actually leaving right now. Bye."),
@@ -76,7 +78,21 @@ dialog_state(grandma, 1, 1) :-
 	println("2 - Sure, I'll help you."),
 	read(Response),
 	dialog_state(grandma, Response, 2).
+
 	
+dialog_state(grandma, 1, 1) :-
+	spider_gone,
+	println("Yes, actually. There is a giant spider living in a forest nearby. It seems to be extremely dangerous."),
+	println("I'm unable to sleep well knowing that it's lurking somewhere in the darkness. Could you do something about it?"),
+	println("0 - Whatever. Bye."),
+	println("1 - The spider from the woods? I have already got rid of it."),
+	read(Response),
+	dialog_state(grandma, Response, 3).
+	
+dialog_state(grandma, 1, 3) :-
+	start_quest(spiderman),
+	dialog_state(grandma, 1, 0).
+
 dialog_state(grandma, 1, 2) :-
 	println("Please help me. You are the only one who can."),
 	dialog_state(grandma, 1, 0).
@@ -90,6 +106,39 @@ dialog_state(grandma, 2, 2) :-
 dialog_state(grandma, 0, _) :-
 	println("Bye.").
 	
+	
+dialog_state(spider, 1, 0) :- 
+	\+ spider_gone,
+	println("There is a spider in a small glade."),
+	dialog_state(spider, 2, 0).
+
+dialog_state(spider, 2, 0) :-
+	println("0 - Leave slowly."),
+	println("1 - Look closer."),
+	println("2 - Attack."),
+	println("3 - Scare it away."),
+	read(Response),
+	dialog_state(spider, Response, 1).
+	
+dialog_state(spider, 1, 1) :-
+	println("It seems that the spider did not notice you yet."),
+	println("Despite the fact that it is indeed quite large, you have a feeling that it will not attack if not provoked."),
+	println("Small insects are often scared of people. You wonder if that is also the case for the bigger ones."),
+	dialog_state(spider, 2, 0).
+
+dialog_state(spider, 2, 1) :-
+	println("As you charge at the spider, the fight begins..."),
+	assertz(is_enemy(spider)).
+
+dialog_state(spider, 3, 1) :-
+	println("You sneak on a spider slowly. You manage to get close, breathe in, and then suddenly jump and scream as loud as you can."),
+	println("The spider freaks out and escapes."),
+	retractall(position(spider,_)),
+	println("There is no one around anymore.").
+	
+		
+dialog_state(spider, 0, _) :-
+	println("You walk away and nothing happens.").
 
 
 
@@ -117,7 +166,8 @@ dialog_state(dragon, 1, 0) :-
 	println("The herbs! Now I can become human again!"),
 	finish_quest(saving_dragon),
 	println("You saved the dragon, and - by extension - the world. All is good now."),
-	add_achievement("Finish the game by removing the curse"),
+	add_killing_achiev,
+	add_achievement("Finish the game by removing the curse."),
 	retractall(event(fight_dragon, _)),
 	retractall(game_in_progress).
 

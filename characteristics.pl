@@ -1,5 +1,5 @@
 :- ['utils'].
-:- dynamic achivement/1, visited/1.
+:- dynamic achievement/1, visited/1.
 
 characteristics(perceptive) :-
 	has(hero, location_map).
